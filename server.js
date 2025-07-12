@@ -41,7 +41,7 @@ app.use("/api/", limiter);
 // CORS configuration
 app.use(
   cors({
-    origin: "https://trelloclonebynikhil.netlify.app/",
+    origin: "*",
     credentials: true,
   })
 );
