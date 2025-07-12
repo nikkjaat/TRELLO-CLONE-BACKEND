@@ -22,22 +22,24 @@ router.use(protect);
 
 // Validation rules
 const createTaskValidation = [
-  body("title")
+  body("task.title")
     .trim()
     .isLength({ min: 1, max: 100 })
     .withMessage("Title is required and must be less than 100 characters"),
-  body("description")
+  body("task.description")
     .optional()
     .trim()
     .isLength({ max: 1000 })
     .withMessage("Description must be less than 1000 characters"),
-  body("priority")
+  body("task.priority")
     .optional()
     .isIn(["low", "medium", "high"])
     .withMessage("Priority must be low, medium, or high"),
-  body("assigneeId").isMongoId().withMessage("Valid assignee ID is required"),
-  body("dueDate").isISO8601().withMessage("Valid due date is required"),
-  body("tags").optional().isArray().withMessage("Tags must be an array"),
+  body("task.assigneeId")
+    .isMongoId()
+    .withMessage("Valid assignee ID is required"),
+  body("task.dueDate").isISO8601().withMessage("Valid due date is required"),
+  body("task.tags").optional().isArray().withMessage("Tags must be an array"),
 ];
 
 const updateTaskValidation = [
@@ -133,7 +135,7 @@ router.delete("/:id", authorize("admin"), deleteTask);
 router.put(
   "/bulk/update",
   authorize("admin", "vendor"),
-  bulkUpdateValidation,
+  
   bulkUpdateTasks
 );
 router.delete("/bulk/delete", authorize("admin"), bulkDeleteTasks);

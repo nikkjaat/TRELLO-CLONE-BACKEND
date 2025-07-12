@@ -134,7 +134,6 @@ export const getTask = asyncHandler(async (req, res) => {
 // @route   POST /api/tasks
 // @access  Private (Admin, Vendor)
 export const createTask = asyncHandler(async (req, res) => {
-  console.log(req.body);
   // Check for validation errors
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -145,10 +144,11 @@ export const createTask = asyncHandler(async (req, res) => {
     });
   }
 
-  const { assigneeId } = req.body;
+  const { assigneeId } = req.body.task;
 
   // Verify assignee exists
   const assignee = await User.findById(assigneeId);
+
   if (!assignee) {
     return res.status(400).json({
       success: false,
@@ -158,7 +158,7 @@ export const createTask = asyncHandler(async (req, res) => {
 
   // Create task
   const task = await Task.create({
-    ...req.body,
+    ...req.body.task,
     assignee: assignee.name,
     createdBy: req.user._id,
   });

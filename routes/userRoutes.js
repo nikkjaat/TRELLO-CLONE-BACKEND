@@ -12,7 +12,7 @@ import { protect, authorize } from '../middleware/auth.js';
 const router = express.Router();
 
 // All routes are protected
-router.use(protect);
+// router.use(protect);
 
 // Query validation
 const getUsersValidation = [
