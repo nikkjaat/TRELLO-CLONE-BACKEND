@@ -135,7 +135,7 @@ router.delete("/:id", authorize("admin"), deleteTask);
 router.put(
   "/bulk/update",
   authorize("admin", "vendor"),
-  
+
   bulkUpdateTasks
 );
 router.delete("/bulk/delete", authorize("admin"), bulkDeleteTasks);
